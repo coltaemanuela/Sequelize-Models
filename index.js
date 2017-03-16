@@ -13,8 +13,8 @@ var passportlocal= require('passport-local');
 var passportsession= require('passport-session');
 
 var User = require('./models/users_model.js');
-var EventUser = require('./event_user_model.js');
-var Event= require('./events_model.js');
+var EventUser = require('./models/event_user_model.js');
+var Event= require('./models/events_model.js');
 
 var router = express.Router();
 

@@ -1,31 +1,20 @@
-var EventUser = require('./event_user_model.js');
 var Event= require('./events_model.js');
-//_____________________________________________________Init & Config Sequelize___________________________________________________
-
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize('millesime_admin', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  }
-});
+var sequelize = require("../config/db");
+var Sequelize = require("sequelize");
 //_______________________________________________Declare table structure ______________________________________________
 
 var User = sequelize.define('user', {
   username: {
     type: Sequelize.STRING,
   },
-  password: { 
+  password: {
     type: Sequelize.STRING,
   },
   email: {
     type: Sequelize.STRING
   },
 }, {
-  freezeTableName: true 
+  freezeTableName: true
 });
 
 //___________________________________Establish relationships with other tables____________________
@@ -39,7 +28,7 @@ User.sync().then(function () { //sync only creates table; cannot update them  //
     username: 'username',
     password: 'parola',
     email: 'email@gmail.com',
-  
+
   });
 }).then(c => {
     console.log("User Created", c.toJSON());

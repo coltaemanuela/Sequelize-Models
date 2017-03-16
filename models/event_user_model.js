@@ -1,20 +1,11 @@
 var User = require('./users_model.js');
 var Event= require('./events_model.js');
-//_____________________________________________________Initialize & Config Sequelize__________________________________
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize('millesime_admin', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  }
-});
+var sequelize = require("../config/db");
+var Sequelize = require("sequelize");
+
 //_______________________________________________Declare table structure ______________________________________________
 
-var EventUser = sequelize.define('eventuser', {    
-
+var EventUser = sequelize.define('eventuser', {
  reservationConfirmation:{
     type:Sequelize.BOOLEAN,
  },
@@ -22,22 +13,19 @@ var EventUser = sequelize.define('eventuser', {
     type:Sequelize.BOOLEAN
  },
 },{
-  freezeTableName: true 
+  freezeTableName: true
 });
 
 //___________________________________Establish relationships with other tables_______________________________________
+User.belongsToMany(Event, { through: EventUser });
+Event.belongsToMany(User, { through: EventUser });
 
-//EventUser.hasMany(User, {foreignKey:id});
-//EventUser.hasMany(Event, {foreignKey: eventid});
-
-EventUser.belongsTo(Event);
-EventUser.belongsTo(User);
 //________________________________________Create table_______________________________________________________________
 
 EventUser.sync(  ).then(function () {
   return EventUser.create({
     reservationConfirmation: true,
-    attendance: true   
+    attendance: true
   });
 }).then(c => {
     console.log("Created", c.toJSON());
