@@ -6,7 +6,6 @@ var Sequelize = require("sequelize");
 //_______________________________________________Declare table structure ______________________________________________
 
 var EventUser = sequelize.define('eventuser', {
-
  reservationConfirmation:{
     type:Sequelize.BOOLEAN,
  },
@@ -18,12 +17,9 @@ var EventUser = sequelize.define('eventuser', {
 });
 
 //___________________________________Establish relationships with other tables_______________________________________
+User.belongsToMany(Event, { through: EventUser });
+Event.belongsToMany(User, { through: EventUser });
 
-//EventUser.hasMany(User, {foreignKey:id});
-//EventUser.hasMany(Event, {foreignKey: eventid});
-
-EventUser.belongsTo(Event);
-EventUser.belongsTo(User);
 //________________________________________Create table_______________________________________________________________
 
 EventUser.sync(  ).then(function () {

@@ -1,4 +1,3 @@
-var EventUser = require('./event_user_model.js');
 var User = require('./users_model.js');
 var sequelize = require("../config/db");
 var Sequelize = require("sequelize");
